@@ -1,0 +1,13 @@
+Language: Cpp
+BasedOnStyle: LLVM
+
+# Allman Style settings
+BreakBeforeBraces: Allman
+
+# Alignment settings for equal signs
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: true
+  PadOperators: true
