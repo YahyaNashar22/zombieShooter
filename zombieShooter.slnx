@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="zombieShooter.vcxproj" />
+  <Project Path="zombieShooter.vcxproj" Id="bc5482c8-b23e-4250-a871-d1d76463b34e" />
 </Solution>
