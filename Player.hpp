@@ -9,9 +9,9 @@ class Player
 
     sf::Vector2f m_position;
 
-    sf::Sprite m_sprite;
-
     sf::Texture m_texture;
+
+    sf::Sprite m_sprite;
 
     // scrn resolution
     sf::Vector2f m_resolution;
