@@ -36,10 +36,11 @@ void Player::resetPlayerStats()
 
 sf::Time Player::getLastHitTime() { return m_lastHit; }
 
-bool Player::hit(sf::Time timeHit) {
+bool Player::hit(sf::Time timeHit)
+{
     if (timeHit.asMicroseconds() - m_lastHit.asMicroseconds() > 200)
     {
-        m_lastHit = timeHit;
+        m_lastHit  = timeHit;
         m_health  -= 10;
         return true;
     }
@@ -48,3 +49,13 @@ bool Player::hit(sf::Time timeHit) {
         return false;
     }
 }
+
+sf::FloatRect Player::getPosition() { return m_sprite.getGlobalBounds(); }
+
+sf::Vector2f Player::getCenter() { return m_position; }
+
+sf::Angle Player::getRotation() { return m_sprite.getRotation(); }
+
+sf::Sprite Player::getSprite() { return m_sprite; }
+
+int Player::getHealth() { return m_health; }

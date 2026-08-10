@@ -54,7 +54,7 @@ class Player
 
     sf::Vector2f getCenter();
 
-    float getRotation();
+    sf::Angle getRotation();
 
     sf::Sprite getSprite();
 
