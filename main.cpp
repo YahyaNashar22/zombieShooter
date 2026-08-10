@@ -112,6 +112,7 @@ int main()
                     break;
                 }
 
+                    // movement controls
                     if (state == State::PLAYING)
                     {
                         switch (keyReleased->code)
@@ -135,9 +136,77 @@ int main()
                         default:
                             break;
                         }
+
+                        // leveling up controls
+                        if (state == State::LEVELING_UP)
+                        {
+                            switch (keyReleased->code)
+                            {
+                            case sf::Keyboard::Key::Num1:
+                                state = State::PLAYING;
+                                break;
+                            case sf::Keyboard::Key::Num2:
+                                state = State::PLAYING;
+                                break;
+                            case sf::Keyboard::Key::Num3:
+                                state = State::PLAYING;
+                                break;
+                            case sf::Keyboard::Key::Num4:
+                                state = State::PLAYING;
+                                break;
+                            case sf::Keyboard::Key::Num5:
+                                state = State::PLAYING;
+                                break;
+                            case sf::Keyboard::Key::Num6:
+                                state = State::PLAYING;
+                                break;
+                            default:
+                                break;
+                            }
+
+                            if (state == State::PLAYING)
+                            {
+                                // prepare the level
+                                arena.size.x     = 500;
+                                arena.size.y     = 500;
+                                arena.position.x = 0;
+                                arena.position.y = 0;
+
+                                int tileSize = 50;
+                                player.spawn(arena, resolution, tileSize);
+
+                                // reset clock so there isn't a frame jump
+                                clock.restart();
+                            }
+                        }
                     }
                 }
             }
+        }
+
+        if (state == State::PLAYING)
+        {
+            // update delta time
+            sf::Time dt = clock.restart();
+
+            // upgrade total game time
+            gameTimeTotal += dt;
+
+            // make a fraction of 1 from the delta time
+            float dtAsSeconds = dt.asSeconds();
+
+            // where is the mouse pointer
+            mouseScreenPosition = sf::Mouse::getPosition();
+
+            // convert mouse position to world based on coordinates of mainView
+            mouseWoldPosition =
+                window.mapPixelToCoords(sf::Mouse::getPosition(), mainView);
+
+            // update the player
+            player.update(dtAsSeconds, sf::Mouse::getPosition());
+
+            // make a note of the players new position
+            sf::Vector2f playerPosition(player.getCenter());
         }
 
         window.clear(sf::Color::Black);
