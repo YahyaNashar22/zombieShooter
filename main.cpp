@@ -20,7 +20,8 @@ int main()
     resolution.x = sf::VideoMode::getDesktopMode().size.x;
     resolution.y = sf::VideoMode::getDesktopMode().size.y;
 
-    sf::VideoMode vm({resolution.x, resolution.y});
+    sf::VideoMode vm({static_cast<unsigned>(resolution.x),
+                      static_cast<unsigned>(resolution.y)});
 
     sf::RenderWindow window(vm, "Zombie Shooter", sf::State::Fullscreen);
 
@@ -195,7 +196,7 @@ int main()
             // update delta time
             sf::Time dt = clock.restart();
 
-            // upgrade total game time
+            // update total game time
             gameTimeTotal += dt;
 
             // make a fraction of 1 from the delta time
@@ -213,9 +214,27 @@ int main()
 
             // make a note of the players new position
             sf::Vector2f playerPosition(player.getCenter());
+
+            mainView.setCenter(player.getCenter());
+
+            window.clear(sf::Color::Black);
+
+            window.setView(mainView);
+
+            window.draw(player.getSprite());
         }
 
-        window.clear(sf::Color::Black);
+        if (state == State::LEVELING_UP)
+        {
+        };
+
+        if (state == State::PAUSED)
+        {
+        };
+
+        if (state == State::GAME_OVER)
+        {
+        };
 
         window.display();
     }
