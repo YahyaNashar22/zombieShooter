@@ -87,98 +87,104 @@ int main()
 
             else if (auto *keyReleased = event->getIf<sf::Event::KeyReleased>())
             {
-                switch (keyReleased->code)
+                // any state //////////////////////////////////
+                if (keyReleased->code == sf::Keyboard::Key::Escape)
                 {
-                case sf::Keyboard::Key::Escape:
                     window.close();
-                    break;
-                case sf::Keyboard::Key::Enter:
-                {
-                    if (state == State::PLAYING)
-                    {
-                        state = State::PAUSED;
-                    }
-                    else if (state == State::PAUSED)
-                    {
-                        state = State::PLAYING;
-                        clock.restart();
-                    }
-                    else if (state == State::GAME_OVER)
-                    {
-                        state = State::LEVELING_UP;
-                    }
-                    break;
-                default:
-                    break;
                 }
 
-                    // movement controls
-                    if (state == State::PLAYING)
+                // GAME_OVER State //////////////////////////////
+                if (state == State::GAME_OVER)
+                {
+                    switch (keyReleased->code)
                     {
-                        switch (keyReleased->code)
-                        {
-                        case sf::Keyboard::Key::W:
-                            player.stopUp();
-                            break;
+                    case sf::Keyboard::Key::Enter:
+                        state = State::LEVELING_UP;
+                        break;
+                    }
+                }
 
-                        case sf::Keyboard::Key::S:
-                            player.stopDown();
-                            break;
+                // PAUSED State //////////////////////////////////
+                if (state == State::PAUSED)
+                {
+                    switch (keyReleased->code)
+                    {
+                    case sf::Keyboard::Key::Enter:
+                        state = State::PLAYING;
+                        clock.restart();
+                        break;
+                    }
+                }
 
-                        case sf::Keyboard::Key::D:
-                            player.stopRight();
-                            break;
+                // PLAYING State //////////////////////////////////////
+                // movement controls
+                if (state == State::PLAYING)
+                {
+                    switch (keyReleased->code)
+                    {
+                    case sf::Keyboard::Key::Enter:
+                        state == State::PAUSED;
+                        break;
 
-                        case sf::Keyboard::Key::A:
-                            player.stopLeft();
-                            break;
+                    case sf::Keyboard::Key::W:
+                        player.stopUp();
+                        break;
 
-                        default:
-                            break;
-                        }
+                    case sf::Keyboard::Key::S:
+                        player.stopDown();
+                        break;
 
-                        // leveling up controls
-                        if (state == State::LEVELING_UP)
-                        {
-                            switch (keyReleased->code)
-                            {
-                            case sf::Keyboard::Key::Num1:
-                                state = State::PLAYING;
-                                break;
-                            case sf::Keyboard::Key::Num2:
-                                state = State::PLAYING;
-                                break;
-                            case sf::Keyboard::Key::Num3:
-                                state = State::PLAYING;
-                                break;
-                            case sf::Keyboard::Key::Num4:
-                                state = State::PLAYING;
-                                break;
-                            case sf::Keyboard::Key::Num5:
-                                state = State::PLAYING;
-                                break;
-                            case sf::Keyboard::Key::Num6:
-                                state = State::PLAYING;
-                                break;
-                            default:
-                                break;
-                            }
+                    case sf::Keyboard::Key::D:
+                        player.stopRight();
+                        break;
 
-                            if (state == State::PLAYING)
-                            {
-                                // prepare the level
-                                arena.size.x     = 500;
-                                arena.size.y     = 500;
-                                arena.position.x = 0;
-                                arena.position.y = 0;
+                    case sf::Keyboard::Key::A:
+                        player.stopLeft();
+                        break;
 
-                                int tileSize = 50;
-                                player.spawn(arena, resolution, tileSize);
+                    default:
+                        break;
+                    }
 
-                                // reset clock so there isn't a frame jump
-                                clock.restart();
-                            }
-                        }
+                    // prepare the level
+                    arena.size.x     = 500;
+                    arena.size.y     = 500;
+                    arena.position.x = 0;
+                    arena.position.y = 0;
+
+                    int tileSize = 50;
+                    player.spawn(arena, resolution, tileSize);
+
+                    // reset clock so there isn't a frame jump
+                    clock.restart();
+                }
+
+                // LEVELING_UP State ////////////////////////////
+                // leveling up controls
+                if (state == State::LEVELING_UP)
+                {
+                    switch (keyReleased->code)
+                    {
+                    case sf::Keyboard::Key::Num1:
+                        state = State::PLAYING;
+                        break;
+                    case sf::Keyboard::Key::Num2:
+                        state = State::PLAYING;
+                        break;
+                    case sf::Keyboard::Key::Num3:
+                        state = State::PLAYING;
+                        break;
+                    case sf::Keyboard::Key::Num4:
+                        state = State::PLAYING;
+                        break;
+                    case sf::Keyboard::Key::Num5:
+                        state = State::PLAYING;
+                        break;
+                    case sf::Keyboard::Key::Num6:
+                        state = State::PLAYING;
+                        break;
+                    default:
+                        break;
                     }
                 }
             }
