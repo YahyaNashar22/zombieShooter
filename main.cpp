@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "ZombieArena.hpp"
 #include <SFML/Graphics.hpp>
 
 int main()
@@ -13,7 +14,7 @@ int main()
     };
 
     // Start game with GAME_OVER state
-    State state = State::GAME_OVER;
+    State state = State::PLAYING;
 
     sf::Vector2f resolution;
 
@@ -45,6 +46,24 @@ int main()
 
     // the boundaries of the arena
     sf::IntRect arena;
+
+    sf::VertexArray background;
+
+    // Load the texture for our background vertex array
+    sf::Texture textureBackground;
+    textureBackground.loadFromFile("graphics/background_sheet.png");
+
+    // prepare the level
+    arena.size.x     = 500;
+    arena.size.y     = 500;
+    arena.position.x = 0;
+    arena.position.y = 0;
+
+    // Pass the vertexArray by reference to the createBackground
+    // function
+    int tileSize = createBackground(background, arena);
+
+    player.spawn(arena, resolution, tileSize);
 
 #pragma endregion
 
@@ -83,6 +102,7 @@ int main()
                     default:
                         break;
                     }
+
                 }
             }
 
@@ -124,7 +144,7 @@ int main()
                     switch (keyReleased->code)
                     {
                     case sf::Keyboard::Key::Enter:
-                        state == State::PAUSED;
+                        state = State::PAUSED;
                         break;
 
                     case sf::Keyboard::Key::W:
@@ -147,17 +167,6 @@ int main()
                         break;
                     }
 
-                    // prepare the level
-                    arena.size.x     = 500;
-                    arena.size.y     = 500;
-                    arena.position.x = 0;
-                    arena.position.y = 0;
-
-                    int tileSize = 50;
-                    player.spawn(arena, resolution, tileSize);
-
-                    // reset clock so there isn't a frame jump
-                    clock.restart();
                 }
 
                 // LEVELING_UP State ////////////////////////////
@@ -220,6 +229,8 @@ int main()
             window.clear(sf::Color::Black);
 
             window.setView(mainView);
+
+            window.draw(background, &textureBackground);
 
             window.draw(player.getSprite());
         }

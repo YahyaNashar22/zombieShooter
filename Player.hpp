@@ -23,10 +23,10 @@ class Player
     int m_tileSize;
 
     // directions
-    bool m_upPressed;
-    bool m_downPressed;
-    bool m_leftPressed;
-    bool m_rightPressed;
+    bool m_upPressed = false;
+    bool m_downPressed = false;
+    bool m_leftPressed = false;
+    bool m_rightPressed = false;
 
     int m_health;
     int m_maxHealth;
